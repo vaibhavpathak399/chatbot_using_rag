@@ -1,27 +1,43 @@
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 
+from app.config.settings import (
+    QDRANT_HOST,
+    QDRANT_PORT,
+    COLLECTION_NAME,
+    EMBEDDING_MODEL,
+    TOP_K
+)
+
 client = QdrantClient(
-    host="localhost",
-    port=6333
+    host=QDRANT_HOST,
+    port=QDRANT_PORT
 )
 
 model = SentenceTransformer(
-    "BAAI/bge-small-en-v1.5"
+    EMBEDDING_MODEL
 )
 
 
-def retrieve(query, limit=5):
+def retrieve(query):
 
     query_vector = model.encode(
         query
     ).tolist()
 
-    results = client.query_points(
-        collection_name="cybersecurity_book",
-        query=query_vector,
-        limit=limit
-    ).points
+    try:
+
+        results = client.query_points(
+            collection_name=COLLECTION_NAME,
+            query=query_vector,
+            limit=TOP_K
+        ).points
+
+    except Exception as e:
+
+        print(f"Qdrant Error: {e}")
+
+        return []
 
     chunks = []
 
