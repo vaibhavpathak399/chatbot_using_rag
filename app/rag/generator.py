@@ -1,35 +1,37 @@
 import ollama
-
+import time
 from app.config.settings import (
     LLM_MODEL
 )
 
 
 def generate_answer(
+    
     question,
-    context
+    context,
+    history=""
 ):
 
     prompt = f"""
 You are a cybersecurity assistant.
 
-Answer ONLY using the provided context.
+Previous Conversation:
 
-If the answer is not found in the context,
-say:
-
-"I could not find the answer in the provided document."
+{history}
 
 Context:
+
 {context}
 
-Question:
+Current Question:
+
 {question}
 
 Answer:
 """
 
     try:
+        start = time.time()
 
         response = ollama.chat(
             model=LLM_MODEL,
@@ -39,6 +41,9 @@ Answer:
                     "content": prompt
                 }
             ]
+        )
+        print(
+            f"LLM Time: {time.time()-start:.2f} sec"
         )
 
         return response["message"]["content"]

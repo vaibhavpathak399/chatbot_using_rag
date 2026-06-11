@@ -50,6 +50,7 @@ for idx, chunk in enumerate(chunks):
             id=idx,
             vector=vector,
             payload={
+                "source": chunk["source"],
                 "page": chunk["page"],
                 "chunk_id": chunk["chunk_id"],
                 "text": chunk["text"]

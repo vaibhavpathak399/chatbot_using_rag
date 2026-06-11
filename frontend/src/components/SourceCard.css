@@ -1,0 +1,41 @@
+.source-card {
+
+  padding: 12px;
+
+  margin-top: 8px;
+
+  border-radius: 12px;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.04
+  );
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+
+  width: fit-content;
+
+  min-width: 220px;
+}
+
+.source-card:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+}
+
+.source-title {
+  color: #60a5fa;
+  font-weight: 600;
+}
+
+.source-page {
+  color: #9ca3af;
+  margin-top: 5px;
+}
